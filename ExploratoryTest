@@ -1,0 +1,97 @@
+Quickly I verified for exploratory, accessibility, basic penetration and load test.
+
+Below is the report for the same.
+
+URL:http://hotel-test.equalexperts.io/
+Browser: Google Chrome version 77.1
+
+Scenario 1:
+
+Add record by leaving either all the fields or any one field blank
+
+Test result: not allowed to add record with empty field
+
+Scenario 2:
+
+Add record with price = alphanumeric (example: asad12)
+
+Test result: Not allowed to add the record when price is alphanumeric, which is correct.
+
+Scenario 3: 
+
+Add same data multiple times with no change (tied 7 times to add same data)
+
+Example:
+First name = test
+Last name = test
+Price=1
+Deposit = true
+Check in = 2019-09-09
+Check out = 2019-09-30
+
+Test result: All the times record added, there is no field which uniquely identifies each row. Needs some more clarity regarding adding duplicate records.
+
+Scenario 4: Add Check in date after the checkout date
+
+Example: 
+
+Check in = 2019-09-09
+Check out = 2019-08-30
+
+Test result: Record successfully added. There should be validation to check check in date is on or before checkout date.
+
+Scenario 5: 
+Add first name and surname with numeric fields
+Add first name = 1213232, surname = 1232323 and price = 1.00 
+Deposit = true
+Check in = 2019-09-09
+Check out = 2019-09-30
+
+Test result: Successfully added the record, there should be a validation present for name fields when we enter only numbers.
+
+Scenario 6: 
+
+Check the calender while selecting the checkout and check in dates.
+
+Test result: Check in and checkout calender, date selection option is available for all the dates including previous dates.
+
+There should be functionality to disable date which is less than current date, which is missing right now.
+
+Scenario 7: Check max limit for all the fields.
+
+Add First name, surname and price field with maximum value.
+
+Test result: There is no max length fixed for these fields and accepts any length of data.
+When longer value is added to above fields, and create the record, display is overlapping with one another.
+
+Accessibility testing:
+Verified using Axe-core(4.0) plugin
+
+There are 10 error found and the web page is not meet the Web accessibility standards.
+
+1. Ensures every form element has a label - same issue exists for 6 form elements.
+
+Example: <input id="firstname" class="input">
+
+2. Ensures every HTML document has a lang attribute
+
+3. Ensures the document has only one main landmark and each iframe in the page has at most one main landmark
+
+4. Ensures all page content is contained by landmarks
+
+Basic penetration test:
+1. Crosssite scripting: Not handled.
+
+Tried to add script <b onmouseover=alert('Wufff!')>click me!</b> in first name and surname field. Successfully added the data and giving mouse over alert.
+
+Tried to add script <img src="http://url.to.file.which/not.exist" onerror=alert(document.cookie);> in first name and surname. Added the record successfully and giving dis[playing the alert.
+
+
+Load test:
+
+Add record request finished with in 500 ms where less number of records(25 records) present.
+It is worth checking load under different time frame and more number of users as it is citizen facing application.
+
+
+
+ 
